@@ -1,5 +1,12 @@
 {
+  "scripts": {
+    "lint": "eslint ."
+  },
   "dependencies": {
     "@playwright/test": "^1.61.1"
+  },
+  "devDependencies": {
+    "eslint": "^10.6.0",
+    "eslint-plugin-playwright": "^2.10.4"
   }
 }

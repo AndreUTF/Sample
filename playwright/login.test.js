@@ -8,8 +8,7 @@ test.describe('Tester Assessment', () => {
   });
 
   test('should render submit button', async ({ page }) => {
-    const buttonText = await page.innerText('form>button')
-    expect(buttonText).toBe('SUBMIT')
+    await expect(page.locator('form>button')).toHaveText('Submit')
   });
 
   test('User should be able to enter and submit a valid user for <domain>.com', async ({ page }) => {
