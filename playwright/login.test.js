@@ -255,4 +255,18 @@ test.describe('Tester Assessment', () => {
     await expect(welcomeMessage).toBeVisible();
     await expect(welcomeMessage).toHaveText("Welcome andre@gmail.com!");
   });
+
+  test('User should see a personalized welcome message after a successful login 2', async ({ page }) => {
+    var emailField = await page.locator('[id="email"]').first();
+    await emailField.fill("andre@gmail.com");
+    var passwordField = await page.locator('[id="password"]').first();
+    await passwordField.fill("2j3ww9tz@Cc");
+
+    var submitField = await page.locator('[data-testid="submit-button"]').first();
+    await submitField.click();
+
+    var welcomeMessage = await page.locator('h1').first();
+    await expect(welcomeMessage).toBeVisible();
+    await expect(welcomeMessage).toHaveText("Welcome andre@gmail.com!");
+  });
 });
