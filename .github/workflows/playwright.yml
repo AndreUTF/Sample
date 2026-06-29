@@ -10,7 +10,27 @@ permissions:
   contents: read
 
 jobs:
+  lint-and-build:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Build check (resolve test files)
+        run: npx playwright test --list
+
   test:
+    needs: lint-and-build
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
