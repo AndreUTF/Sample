@@ -2,9 +2,9 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [main, master]
   pull_request:
     branches: [main, master]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -58,17 +58,17 @@ jobs:
           retention-days: 30
 
       - name: Configure Pages
-        if: ${{ !cancelled() && github.event_name == 'push' }}
+        if: ${{ !cancelled() && github.event_name == 'push' && contains(fromJSON('["refs/heads/main", "refs/heads/master"]'), github.ref) }}
         uses: actions/configure-pages@v5
 
       - name: Upload report for Pages
-        if: ${{ !cancelled() && github.event_name == 'push' }}
+        if: ${{ !cancelled() && github.event_name == 'push' && contains(fromJSON('["refs/heads/main", "refs/heads/master"]'), github.ref) }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: playwright-report/
 
   deploy-report:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && contains(fromJSON('["refs/heads/main", "refs/heads/master"]'), github.ref) }}
     needs: test
     permissions:
       pages: write
